@@ -3,12 +3,12 @@
 > **Instrucciones:** Cambia `[ ]` por `[x]` para marcar las tareas completadas.
 
 ## 🧱 Fase 1: El Corazón del Sistema (Lógica JS)
-- [ ] **Clase HuddleMap**: Definir la clase con constructor de filas y columnas.
-- [ ] **Generación de Matriz**: Crear el array bidimensional lleno de `0`.
-- [ ] **Constantes de Terreno**: Definir 0 (libre), 1 (edificio), 2 (agua), 3 (bloqueo).
-- [ ] **Método setTerrain**: Función para cambiar el valor de una celda específica.
-- [ ] **Validador de Límites**: Función `isValid(x, y)` para evitar errores de coordenadas.
-- [ ] **Visualizador de Consola**: Método `display()` que use `.`, `X`, `W` y `B`.
+- [x] **Clase HuddleMap**: Definir la clase con constructor de filas y columnas.
+- [x] **Generación de Matriz**: Crear el array bidimensional lleno de `0`.
+- [x] **Constantes de Terreno**: Definir 0 (libre), 1 (edificio), 2 (agua), 3 (bloqueo).
+- [x] **Método setTerrain**: Función para cambiar el valor de una celda específica.
+- [x] **Validador de Límites**: Función `isValid(x, y)` para evitar errores de coordenadas.
+- [x] **Visualizador de Consola**: Método `display()` que use `.`, `X`, `W` y `B`.
 
 ## 🎨 Fase 2: Interfaz Visual (HTML/CSS)
 - [ ] **Contenedor HTML**: Crear un div `#grid-container` en el index.html.
