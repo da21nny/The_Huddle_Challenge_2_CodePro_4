@@ -33,13 +33,13 @@ class huddleMap{
     }
 
     generar_obstaculos(){
-        const numObstaculos = Math.floor((this.filas * this.columnas) * 0.5);
+        const numObstaculos = Math.floor((this.filas * this.columnas) * 0.3);
         for(let i = 0; i < numObstaculos; i++){
-            const f = Math.floor(Math.random() * this.filas);
-            const c = Math.floor(Math.random() * this.columnas);
+            const fila = Math.floor(Math.random() * this.filas);
+            const columna = Math.floor(Math.random() * this.columnas);
             const tipo = Math.floor(Math.random() * 3) + 1;
 
-            this.colocar_terreno(f, c, tipo);
+            this.colocar_terreno(fila, columna, tipo);
         }
 
 
