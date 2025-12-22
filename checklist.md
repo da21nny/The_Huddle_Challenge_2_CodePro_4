@@ -11,10 +11,10 @@
 - [x] **Visualizador de Consola**: Método `display()` que use `.`, `X`, `W` y `B`.
 
 ## 🎨 Fase 2: Interfaz Visual (HTML/CSS)
-- [ ] **Contenedor HTML**: Crear un div `#grid-container` en el index.html.
-- [ ] **CSS Grid**: Configurar el grid para que las celdas sean cuadradas y alineadas.
-- [ ] **Estilos por Tipo**: Crear clases CSS para cada terreno (ej. `.wall { background: #333 }`).
-- [ ] **Función renderMap**: Lógica en JS que borre el contenedor y cree nuevos `div` por cada celda.
+- [X] **Contenedor HTML**: Crear un div `#grid-container` en el index.html.
+- [X] **CSS Grid**: Configurar el grid para que las celdas sean cuadradas y alineadas.
+- [X] **Estilos por Tipo**: Crear clases CSS para cada terreno (ej. `.wall { background: #333 }`).
+- [X] **Función renderMap**: Lógica en JS que borre el contenedor y cree nuevos `div` por cada celda.
 - [ ] **Panel de Control**: Añadir botones para "Calcular" y "Reiniciar Mapa".
 
 ## 🧠 Fase 3: Inteligencia (Algoritmo BFS)
