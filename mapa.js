@@ -65,19 +65,44 @@ class huddleMap{
 
     mostrar_mapa(){
         const contenedor = document.getElementById('resultado');
-        let texto_salida = '';
+        contenedor.textContent = '';
+
+        contenedor.style.gridTemplateColumns = `repeat(${this.columnas}, 35px)`;
         for(let fila = 0; fila < this.filas; fila++){
             for(let columna = 0; columna < this.columnas; columna++){
-                if(this.matriz[fila][columna] == 1) texto_salida += 'X'; //Edificio
-                else if(this.matriz[fila][columna] == 2) texto_salida += 'a'; //Agua
-                else if(this.matriz[fila][columna] == 3) texto_salida += 'B'; //Bloqueo
-                else if(this.matriz[fila][columna] == 9) texto_salida += 'E';
-                else if(this.matriz[fila][columna] == 7) texto_salida += 'S';
-                else texto_salida += '.'; //Camino
+                const celdaDiv = document.createElement('div');
+                celdaDiv.classList.add('cell');
+
+                const valor = this.matriz[fila][columna];
+
+                if(valor === 1){
+                    celdaDiv.textContent = 'X';
+                    celdaDiv.classList.add('edificio');
+                }
+                else if(valor === 2){
+                    celdaDiv.textContent = 'a';
+                    celdaDiv.classList.add('agua');
+                }
+                else if(valor === 3){
+                    celdaDiv.textContent = 'B';
+                    celdaDiv.classList.add('bloqueo');
+                } 
+                else if(valor === 9){
+                    celdaDiv.textContent = 'E';
+                    celdaDiv.classList.add('entrada');
+                } 
+                else if(valor === 7){
+                    celdaDiv.textContent = 'S';
+                    celdaDiv.classList.add('salida');
+                }
+                else{
+                    celdaDiv.textContent = '.';
+                    celdaDiv.classList.add('libre');
+                }
+                contenedor.appendChild(celdaDiv);
             }
-            texto_salida += '\n';
         }
-        contenedor.textContent = texto_salida;
+        //contenedor.textContent = texto_salida;
     }
 }
 
