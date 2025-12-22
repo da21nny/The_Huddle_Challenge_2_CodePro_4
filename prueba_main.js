@@ -1,29 +1,21 @@
+import { huddleMap } from "./mapa.js"
+
 function main(){
-    let matriz = [];
-
-    const pos_x = parseInt(document.getElementById('posicion_x').value);
-    const pos_y = parseInt(document.getElementById('posicion_y').value);
-
     const numFila = parseInt(document.getElementById('fila').value);
     const numColumna = parseInt(document.getElementById('columna').value);
-    const contenedor = document.getElementById('resultado');
-    
-    for(let y = 0; y < numFila; y++){
-        let fila = [];
-        for(let x = 0; x < numColumna; x++){
-            fila.push('⬜');
-        }
-        matriz.push(fila);
-    }
-
-    if(pos_x >= 0 && pos_x < numFila && pos_y >= 0 && pos_y < numColumna ){
-        matriz[pos_y - 1][pos_x - 1] = '🏁';
-    } else{
-        alert("Posicion Invalida");
-    }
-
-    
-    const representacionvisual = matriz.map(fila => fila.join(" ")).join("<br>");
-
-    contenedor.innerHTML = representacionvisual;
+    const inicial_x = parseInt(document.getElementById('inicial_x').value);
+    const inicial_y = parseInt(document.getElementById('inicial_y').value);
+    const fin_x = parseInt(document.getElementById('fin_x').value);
+    const fin_y = parseInt(document.getElementById('fin_y').value);
+ 
+    const app = new huddleMap(numFila, numColumna);
+    app.generar_matriz();
+    app.generar_obstaculos();
+    app.coordenada_inicio_fin(inicial_x -1 , inicial_y - 1, fin_x - 1, fin_y - 1);
+    app.mostrar_mapa();    
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    const btnEnviar = document.getElementById('btnEnviar');
+    btnEnviar.addEventListener('click', main);
+});
