@@ -1,4 +1,5 @@
 import { huddleMap, TERRENO } from "./mapa.js";
+import { Coordenadas } from "./coordenadas.js";
 
 export function algoritmo_bfs(app, inicial_x, inicial_y, fin_x, fin_y){
     for (let x = 0; x < app.filas; x++) {
@@ -10,57 +11,67 @@ export function algoritmo_bfs(app, inicial_x, inicial_y, fin_x, fin_y){
     }
 
     // Validar que existan puntos de inicio y fin
-    if (inicial_x === null || fin_x === null) return null;
+    if (inicial_x === null || fin_x === null) return 0;
 
-    let cola = [[inicial_x, inicial_y]];
+    let inicio = new Coordenadas(inicial_x, inicial_y);
+    let fin = new Coordenadas(fin_x, fin_y);
+
+    let cola = [inicio];
     let visitados = new Set();
     let padre = {};
 
-    visitados.add(`${inicial_x},${inicial_y}`);
+    visitados.add(inicio.getClave());
 
-    const movimientos = [[0, 1], [0, -1], [1, 0], [-1, 0]];
+    const movimientos = [new Coordenadas(0, 1),   // derecha
+                         new Coordenadas(0, -1),  // izquierda
+                         new Coordenadas(1, 0),   // abajo
+                         new Coordenadas(-1, 0)   // arriba
+                        ];
 
     while(cola.length > 0){
-        let [x, y] = cola.shift();
+        let actual = cola.shift();
 
-        if(x === fin_x && y === fin_y){
-            return reconstruir_camino(app, padre, fin_x, fin_y, inicial_x, inicial_y);
+        if(actual.esIgual(fin)){
+            return reconstruir_camino(app, padre, fin, inicio); // ahora devuelve número
         }
 
-        for(let [dx, dy] of movimientos){
-            let nx = x + dx;
-            let ny = y + dy;
-            let clave = `${nx},${ny}`;
+        for(let i = 0; i < movimientos.length; i++){
+            let vecino = actual.sumar(movimientos[i]);
+            let clave = vecino.getClave();
 
-            if(app.dentro_de_rango(nx, ny) && !visitados.has(clave)){
+            if(app.dentro_de_rango(vecino.coor_x, vecino.coor_y) && !visitados.has(clave)){
 
-                const tipo_valor = app.matriz[ny][nx];
+                const tipo_valor = app.matriz[vecino.coor_y][vecino.coor_x];
 
                 if(tipo_valor === TERRENO.LIBRE || tipo_valor === TERRENO.INICIO || tipo_valor === TERRENO.FIN){
                     visitados.add(clave);
-                    padre[clave] = [x, y];
-                    cola.push([nx, ny]);
+                    padre[clave] = actual;
+                    cola.push(vecino);
                 }
             }
         }
     }
-    alert("No se encontro camino");
-    return null;
+    // Si no se encuentra camino, devolver 0
+    return 0;
 }
 
-function reconstruir_camino(app, padre, fin_x, fin_y, inicial_x, inicial_y){
-    let actual = `${fin_x},${fin_y}`;
+function reconstruir_camino(app, padre, fin, inicio){
+    let actual = fin.getClave();
+    let pasos = 0;
 
-// Retrocedemos desde el final hacia el inicio usando el mapa de padres
+    // Retrocedemos desde el final hacia el inicio usando el mapa de padres
     while (padre[actual]) {
-        let [px, py] = padre[actual];
+        let posicion = padre[actual];
+
+        // Contamos el paso (cada salto padre->hijo es un paso)
+        pasos += 1;
         
         // Si la celda no es el punto de inicio, la marcamos con el símbolo de camino
-        if (!(px === inicial_x && py === inicial_y)) {
-            app.matriz[py][px] = TERRENO.CAMINO;
+        if (!posicion.esIgual(inicio)) {
+            app.matriz[posicion.coor_y][posicion.coor_x] = TERRENO.CAMINO;
         }
         
-        actual = `${px},${py}`;
+        actual = posicion.getClave();
     }
-    return true;
+    return pasos;
 }

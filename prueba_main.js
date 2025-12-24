@@ -2,11 +2,13 @@ import { huddleMap } from "./mapa.js"
 import { algoritmo_bfs } from "./algorimo_bfs.js";
 
 let app;
+let distancia = 0;
 
 function actualizar_interfaz() {
     if (app.inicial_x !== null && app.fin_x !== null) {
-        algoritmo_bfs(app, app.inicial_x, app.inicial_y, app.fin_x, app.fin_y);
+        distancia = algoritmo_bfs(app, app.inicial_x, app.inicial_y, app.fin_x, app.fin_y);
     }
+    document.getElementById('distancia').innerHTML = distancia;
     app.mostrar_mapa();
 }
 
