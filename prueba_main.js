@@ -1,16 +1,42 @@
 import { huddleMap } from "./mapa.js"
+import { algoritmo_bfs } from "./algorimo_bfs.js";
 
 let app;
+
+function actualizar_interfaz() {
+    if (app.inicial_x !== null && app.fin_x !== null) {
+        algoritmo_bfs(app, app.inicial_x, app.inicial_y, app.fin_x, app.fin_y);
+    }
+    app.mostrar_mapa();
+}
 
 function main_matriz(){
     const numFila = parseInt(document.getElementById('fila').value);
     const numColumna = parseInt(document.getElementById('columna').value);
     
+    let prevStart = null;
+    let prevEnd = null;
+    if(app && app.matriz){
+        if(app.inicial_x !== null && app.inicial_y !== null) prevStart = { x: app.inicial_x, y: app.inicial_y };
+        if(app.fin_x !== null && app.fin_y !== null) prevEnd = { x: app.fin_x, y: app.fin_y };
+    }
+
+
     app = new huddleMap(numFila, numColumna);
+
+    if(prevStart){
+        app.inicial_x = prevStart.x;
+        app.inicial_y = prevStart.y;
+    }
+    if(prevEnd){
+        app.fin_x = prevEnd.x;
+        app.fin_y = prevEnd.y;
+    }
+
     app.generar_matriz();
     app.generar_obstaculos();
- 
-    app.mostrar_mapa();    
+
+    actualizar_interfaz();
 }
 
 function main_coordenadas(){
@@ -24,8 +50,9 @@ function main_coordenadas(){
     const fin_x = parseInt(document.getElementById('fin_x').value);
     const fin_y = parseInt(document.getElementById('fin_y').value);
 
-    app.coordenada_inicio_fin(inicial_x -1 , inicial_y - 1, fin_x - 1, fin_y - 1); 
-    app.mostrar_mapa();
+    app.coordenada_inicio_fin(inicial_x -1 , inicial_y - 1, fin_x - 1, fin_y - 1);
+
+    actualizar_interfaz();
 
 }
 
