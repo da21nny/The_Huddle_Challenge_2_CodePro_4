@@ -116,16 +116,15 @@ export class huddleMap{
         }
     }
 
-    mostrar_mapa(){
+    mostrar_mapa(callbackClick){
         const contenedor = document.getElementById('resultado');
-        contenedor.textContent = '';
-
+        contenedor.innerHTML = '';
         contenedor.style.gridTemplateColumns = `repeat(${this.columnas}, 35px)`;
+
         for(let fila = 0; fila < this.filas; fila++){
             for(let columna = 0; columna < this.columnas; columna++){
                 const celdaDiv = document.createElement('div');
                 celdaDiv.classList.add('cell');
-
                 const valor = this.matriz[fila][columna];
 
                 if(valor === TERRENO.EDIFICIO){
@@ -156,6 +155,18 @@ export class huddleMap{
                     celdaDiv.textContent = '.';
                     celdaDiv.classList.add('libre');
                 }
+                celdaDiv.style.cursor = "pointer"; // Indica que es clickable
+                celdaDiv.onclick = () => {
+                    // No permitimos editar el Inicio o el Fin
+                    if (valor !== TERRENO.INICIO && valor !== TERRENO.FIN) {
+                        // Cambiamos entre LIBRE y EDIFICIO (puedes añadir más tipos si quieres)
+                        const tipo_terreno = Math.floor(Math.random() * 3) + 1;
+                        this.matriz[fila][columna] = (valor === TERRENO.LIBRE || valor === TERRENO.CAMINO) ? tipo_terreno : TERRENO.LIBRE;
+                        
+                        // Si nos pasaron una función, la ejecutamos para recalcular todo
+                        if (callbackClick) callbackClick();
+                    }
+                };
                 contenedor.appendChild(celdaDiv);
             }
         }

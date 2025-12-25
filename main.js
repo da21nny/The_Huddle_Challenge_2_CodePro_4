@@ -16,7 +16,7 @@ function actualizar_interfaz() {
         }
     }
     document.getElementById('distancia').innerHTML = mensaje;
-    app.mostrar_mapa();
+    app.mostrar_mapa(actualizar_interfaz);
 }
 
 function main_matriz(){
