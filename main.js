@@ -1,4 +1,4 @@
-import { huddleMap } from "./mapa.js"
+import { huddleMap, TERRENO } from "./mapa.js"
 import { algoritmo_bfs } from "./algorimo_bfs.js";
 
 let app;
@@ -16,7 +16,7 @@ function actualizar_interfaz() {
         }
     }
     document.getElementById('distancia').innerHTML = mensaje;
-    app.mostrar_mapa(actualizar_interfaz);
+    app.mostrar_mapa();
 }
 
 function main_matriz(){
@@ -74,4 +74,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
     btnGenerar.addEventListener('click', main_matriz);
     btnEnviar.addEventListener('click', main_coordenadas);
+});
+
+const mapaContenedor = document.getElementById('resultado');
+
+// 2. Escuchamos cualquier clic que ocurra dentro
+mapaContenedor.addEventListener('click', (e) => {
+    // Verificamos que el clic haya sido en una celda y que la app esté lista
+    if (app && e.target.classList.contains('cell')) {
+        
+        // Obtenemos la posición de la celda clickeada
+        const f = parseInt(e.target.dataset.fila);
+        const c = parseInt(e.target.dataset.columna);
+        const valorActual = app.matriz[f][c];
+
+        // LÓGICA: Si no es el Inicio (E) ni el Fin (S), cambiamos el terreno
+        
+        if (valorActual !== TERRENO.INICIO && valorActual !== TERRENO.FIN) {
+            // Si es libre (0), lo volvemos cualquier tipo de TERRENO. Si no, lo volvemos libre.
+            const tipo_terreno = Math.floor(Math.random() * 3) + 1;
+
+            app.matriz[f][c] = (valorActual === TERRENO.LIBRE || valorActual === TERRENO.CAMINO) ? tipo_terreno : TERRENO.LIBRE;
+            
+            // ¡MAGIA! Llamamos a tu función para que limpie, recalcule el BFS y redibuje
+            actualizar_interfaz(); 
+        }
+    }
 });
