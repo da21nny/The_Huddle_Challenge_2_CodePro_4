@@ -15,22 +15,22 @@
 - [X] **CSS Grid**: Configurar el grid para que las celdas sean cuadradas y alineadas.
 - [X] **Estilos por Tipo**: Crear clases CSS para cada terreno (ej. `.wall { background: #333 }`).
 - [X] **Función renderMap**: Lógica en JS que borre el contenedor y cree nuevos `div` por cada celda.
-- [ ] **Panel de Control**: Añadir botones para "Calcular" y "Reiniciar Mapa".
+- [X] **Panel de Control**: Añadir botones para "Calcular" y "Reiniciar Mapa".
 
 ## 🧠 Fase 3: Inteligencia (Algoritmo BFS)
-- [ ] **Definir Inicio y Fin**: Variables para almacenar `[row, col]` de salida y llegada.
-- [ ] **Obtener Vecinos**: Función que devuelva solo las celdas adyacentes transitables.
-- [ ] **Estructura de Cola (Queue)**: Configurar el array para el flujo de exploración del BFS.
-- [ ] **Bucle de Búsqueda**: Implementar el algoritmo que recorre el mapa hasta hallar el destino.
-- [ ] **Mapa de Padres**: Objeto para registrar de qué celda vino cada paso (reconstrucción de ruta).
+- [X] **Definir Inicio y Fin**: Variables para almacenar `[row, col]` de salida y llegada.
+- [X] **Obtener Vecinos**: Función que devuelva solo las celdas adyacentes transitables.
+- [X] **Estructura de Cola (Queue)**: Configurar el array para el flujo de exploración del BFS.
+- [X] **Bucle de Búsqueda**: Implementar el algoritmo que recorre el mapa hasta hallar el destino.
+- [X] **Mapa de Padres**: Objeto para registrar de qué celda vino cada paso (reconstrucción de ruta).
 
 
 
 ## 🚀 Fase 4: Interactividad y Resultados
-- [ ] **Modo Edición (Click)**: Permitir que al hacer clic en una celda visual cambie su valor en la matriz.
-- [ ] **Cálculo Dinámico**: Ejecutar el algoritmo al presionar el botón o al cambiar el mapa.
-- [ ] **Dibujar Ruta**: Función que recorra el camino hallado y pinte las celdas con `*` o un color especial.
-- [ ] **Alerta de Sin Salida**: Mostrar un mensaje en el HTML si el destino es inalcanzable.
+- [X] **Modo Edición (Click)**: Permitir que al hacer clic en una celda visual cambie su valor en la matriz.
+- [X] **Cálculo Dinámico**: Ejecutar el algoritmo al presionar el botón o al cambiar el mapa.
+- [X] **Dibujar Ruta**: Función que recorra el camino hallado y pinte las celdas con `*` o un color especial.
+- [X] **Alerta de Sin Salida**: Mostrar un mensaje en el HTML si el destino es inalcanzable.
 
 ## 📄 Fase 5: Entrega y Bonus
 - [ ] **Comentarios de Código**: Explicar brevemente qué hace cada función principal.
