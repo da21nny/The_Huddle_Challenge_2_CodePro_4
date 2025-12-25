@@ -58,6 +58,12 @@
         <label for="columna">Ingrese Columna</label>
         <input type="number" id="columna" name="columna" value="10">
         <br>
+        <label><input type="radio" id="dificultad" name="dificultad" value="0.1" checked> Facil | </label>
+        <label><input type="radio" id="dificultad" name="dificultad" value="0.2"> Medio | </label>
+        <label><input type="radio" id="dificultad" name="dificultad" value="0.3"> Difícil | </label>
+        <label><input type="radio" id="dificultad" name="dificultad" value="0.4"> Muy Difícil | </label>
+        <label><input type="radio" id="dificultad" name="dificultad" value="0.5"> Extremo</label>
+        <br>
         <button class="button, texto" id="btnGenerar">Generar</button>
         <br>
         <label for="inicial_x">P. Inicial en X</label>
@@ -76,7 +82,7 @@
     <div class="matriz-container" id="resultado"></div>
     <br>
     <div class="center">
-        <a class="center, texto">Distancia del Camino : <label class="center" id="distancia">0</label> pasos.</a>
+        <a class="center, texto">Distancia del Camino : <label class="center" id="distancia">0 pasos</label></a>
     </div>
     <script type="module" src="prueba_main.js"></script>
 </body>

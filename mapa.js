@@ -60,8 +60,8 @@ export class huddleMap{
         return true;
     }
 
-    generar_obstaculos(){
-        const numObstaculos = Math.floor((this.filas * this.columnas) * 0.3);
+    generar_obstaculos(dificultad){
+        const numObstaculos = Math.floor((this.filas * this.columnas) * dificultad);
         for(let i = 0; i < numObstaculos; i++){
             const fila = Math.floor(Math.random() * this.filas);
             const columna = Math.floor(Math.random() * this.columnas);

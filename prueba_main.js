@@ -5,16 +5,26 @@ let app;
 let distancia = 0;
 
 function actualizar_interfaz() {
+    let mensaje = "0 pasos";
     if (app.inicial_x !== null && app.fin_x !== null) {
         distancia = algoritmo_bfs(app, app.inicial_x, app.inicial_y, app.fin_x, app.fin_y);
+
+        if(distancia === -1){
+            mensaje = "No hay camino disponible";
+        }else{
+            mensaje = distancia + " pasos";
+        }
     }
-    document.getElementById('distancia').innerHTML = distancia;
+    document.getElementById('distancia').innerHTML = mensaje;
     app.mostrar_mapa();
 }
 
 function main_matriz(){
     const numFila = parseInt(document.getElementById('fila').value);
     const numColumna = parseInt(document.getElementById('columna').value);
+
+    const radio_select = document.querySelector('input[name="dificultad"]:checked');
+    const dificultad = radio_select ? parseFloat(radio_select.value) : 0.1;
     
     let prevStart = null;
     let prevEnd = null;
@@ -36,7 +46,7 @@ function main_matriz(){
     }
 
     app.generar_matriz();
-    app.generar_obstaculos();
+    app.generar_obstaculos(dificultad);
 
     actualizar_interfaz();
 }

@@ -52,7 +52,7 @@ export function algoritmo_bfs(app, inicial_x, inicial_y, fin_x, fin_y){
         }
     }
     // Si no se encuentra camino, devolver 0
-    return 0;
+    return -1;
 }
 
 function reconstruir_camino(app, padre, fin, inicio){
