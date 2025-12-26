@@ -77,10 +77,9 @@ export class huddleMap{
     }
 
     coordenada_inicio_fin(inicial_x, inicial_y, fin_x, fin_y){
-        if(this.dentro_de_rango(inicial_x, inicial_y) && 
-           this.matriz[inicial_y][inicial_x] != TERRENO.EDIFICIO &&
-           this.matriz[inicial_y][inicial_x] != TERRENO.AGUA &&
-           this.matriz[inicial_y][inicial_x] != TERRENO.BLOQUEO){
+        if(this.dentro_de_rango(inicial_x, inicial_y) &&
+           inicial_x != fin_x && inicial_y != fin_y && 
+           this.posicion_no_terreno(inicial_x, inicial_y)){
 
             if(this.inicial_x !== null && this.inicial_y !== null &&
             !(this.inicial_x === inicial_x && this.inicial_y === inicial_y)){
@@ -97,9 +96,8 @@ export class huddleMap{
         }
 
         if(this.dentro_de_rango(fin_x, fin_y) &&
-           this.matriz[fin_y][fin_x] != TERRENO.EDIFICIO &&
-           this.matriz[fin_y][fin_x] != TERRENO.AGUA &&
-           this.matriz[fin_y][fin_x] != TERRENO.BLOQUEO){
+            fin_x != inicial_x && fin_y != inicial_y &&
+            this.posicion_no_terreno(fin_x, fin_y)){
 
             if(this.fin_x !== null && this.fin_y !== null &&
             !(this.fin_x === fin_x && this.fin_y === fin_y)){
@@ -114,6 +112,12 @@ export class huddleMap{
         } else{
             alert("Posicion Final no Valida")
         }
+    }
+
+    posicion_no_terreno(dato_x, dato_y){
+        return (this.matriz[dato_y][dato_x] != TERRENO.EDIFICIO &&
+           this.matriz[dato_y][dato_x] != TERRENO.AGUA &&
+           this.matriz[dato_y][dato_x] != TERRENO.BLOQUEO)
     }
 
     mostrar_mapa(){

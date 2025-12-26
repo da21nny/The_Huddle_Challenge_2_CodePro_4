@@ -1,4 +1,4 @@
-import { huddleMap, TERRENO } from "./mapa.js";
+import { TERRENO } from "./mapa.js";
 import { Coordenadas } from "./coordenadas.js";
 
 export function algoritmo_bfs(app, inicial_x, inicial_y, fin_x, fin_y){
