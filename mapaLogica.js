@@ -77,7 +77,7 @@ export class huddleMap{
 
     coordenada_inicio_fin(inicial_x, inicial_y, fin_x, fin_y){ // Establece las coordenadas de inicio y fin
         if(this.dentro_de_rango(inicial_x, inicial_y) &&
-           inicial_x != fin_x && inicial_y != fin_y && 
+           !(inicial_x === fin_x && inicial_y === fin_y) && 
            this.posicion_no_terreno(inicial_x, inicial_y)){ // Verifica validez de la posición inicial
 
             if(this.inicial_x !== null && this.inicial_y !== null &&
@@ -95,7 +95,7 @@ export class huddleMap{
         }
 
         if(this.dentro_de_rango(fin_x, fin_y) &&
-            fin_x != inicial_x && fin_y != inicial_y &&
+            !(fin_x === inicial_x && fin_y === inicial_y) &&
             this.posicion_no_terreno(fin_x, fin_y)){ // Verifica validez de la posición final
 
             if(this.fin_x !== null && this.fin_y !== null &&
