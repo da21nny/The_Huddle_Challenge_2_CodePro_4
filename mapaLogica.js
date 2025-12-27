@@ -119,56 +119,6 @@ export class huddleMap{
            this.matriz[dato_y][dato_x] != TERRENO.BLOQUEO)
     }
 
-    mostrar_mapa(){ // Muestra la matriz en el contenedor HTML
-        const contenedor = document.getElementById('resultado'); // Obtener el contenedor del mapa
-        contenedor.innerHTML = ''; // Limpiar contenido previo
-        contenedor.style.gridTemplateColumns = `repeat(${this.columnas}, 35px)`; // Configurar columnas de la cuadrícula
-        contenedor.style.gridTemplateRows = `repeat(${this.filas}, 35px)`; // Configurar filas de la cuadrícula
-
-        for(let fila = 0; fila < this.filas; fila++){
-            for(let columna = 0; columna < this.columnas; columna++){
-                const celdaDiv = document.createElement('div'); // Crear div para la celda
-                celdaDiv.classList.add('cell'); // Añadir clase común a todas las celdas
-                celdaDiv.dataset.fila = fila; // Almacenar fila en dataset
-                celdaDiv.dataset.columna = columna; // Almacenar columna en dataset
-                celdaDiv.style.cursor = "pointer"; // Indica que es clickable
-
-                const valor = this.matriz[fila][columna]; // Obtener el valor de la celda
-
-                 // Asignar contenido y clase según el tipo de terreno
-                if(valor === TERRENO.EDIFICIO){
-                    celdaDiv.textContent = 'X';
-                    celdaDiv.classList.add('edificio');
-                }
-                else if(valor === TERRENO.AGUA){
-                    celdaDiv.textContent = 'a';
-                    celdaDiv.classList.add('agua');
-                }
-                else if(valor === TERRENO.BLOQUEO){
-                    celdaDiv.textContent = 'B';
-                    celdaDiv.classList.add('bloqueo');
-                } 
-                else if(valor === TERRENO.INICIO){
-                    celdaDiv.textContent = 'E';
-                    celdaDiv.classList.add('entrada');
-                } 
-                else if(valor === TERRENO.FIN){
-                    celdaDiv.textContent = 'S';
-                    celdaDiv.classList.add('salida');
-                }
-                else if(valor === TERRENO.CAMINO){
-                    celdaDiv.textContent = '*';
-                    celdaDiv.classList.add('camino');
-                }
-                else{
-                    celdaDiv.textContent = '.';
-                    celdaDiv.classList.add('libre');
-                }
-                contenedor.appendChild(celdaDiv); // Añadir la celda al contenedor
-            }
-        }
-    }
-
     dentro_de_rango(valor_x, valor_y){ // Verifica si las coordenadas están dentro del rango de la matriz
         return (valor_x >= 0 && valor_x < this.columnas && valor_y >= 0 && valor_y < this.filas); // Rango válido
     }

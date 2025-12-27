@@ -1,4 +1,4 @@
-import { TERRENO } from "./mapa.js";
+import { TERRENO } from "./mapaLogica.js";
 import { Coordenadas } from "./coordenadas.js";
 
 // Algoritmo de Búsqueda en Anchura (BFS)

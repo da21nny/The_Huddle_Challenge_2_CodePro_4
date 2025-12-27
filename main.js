@@ -1,23 +1,10 @@
-import { huddleMap, TERRENO } from "./mapa.js"
+import { huddleMap, TERRENO } from "./mapaLogica.js"
 import { algoritmo_bfs } from "./algorimo_bfs.js";
+import { mapaRender } from "./mapaRender.js";
 
 let app; // Instancia global del mapa
+let mapa;
 let distancia = 0; // Distancia calculada por el algoritmo
-
-function actualizar_interfaz(){ // Actualiza la interfaz después de cambios en el mapa
-    let mensaje = "0 pasos";
-    if (app.inicial_x !== null && app.fin_x !== null) {
-        distancia = algoritmo_bfs(app, app.inicial_x, app.inicial_y, app.fin_x, app.fin_y); // Ejecuta el algoritmo BFS
-
-        if(distancia === -1){ // Si no hay camino disponible
-            mensaje = "No hay camino disponible";
-        }else{
-            mensaje = distancia + " pasos";
-        }
-    }
-    document.getElementById('distancia').innerHTML = mensaje; // Actualiza el mensaje de distancia
-    app.mostrar_mapa(); // Muestra el mapa actualizado
-}
 
 function main_matriz(){ // Genera la matriz del mapa
     const numFila = parseInt(document.getElementById('fila').value); // Obtiene número de filas
@@ -34,6 +21,7 @@ function main_matriz(){ // Genera la matriz del mapa
     }
 
     app = new huddleMap(numFila, numColumna); // Crea nueva instancia del mapa
+    mapa = new mapaRender('resultado', numFila, numColumna);
 
     if(prevStart){ // Restaura posición previa de inicio
         app.inicial_x = prevStart.x;
@@ -65,6 +53,22 @@ function main_coordenadas(){ // Establece las coordenadas de inicio y fin
 
     actualizar_interfaz(); // Actualiza la interfaz para reflejar los cambios
 
+}
+
+function actualizar_interfaz(){ // Actualiza la interfaz después de cambios en el mapa
+    let mensaje = "0 pasos";
+    if (app.inicial_x !== null && app.fin_x !== null) {
+        distancia = algoritmo_bfs(app, app.inicial_x, app.inicial_y, app.fin_x, app.fin_y); // Ejecuta el algoritmo BFS
+
+        if(distancia === -1){ // Si no hay camino disponible
+            mensaje = "No hay camino disponible";
+        }else{
+            mensaje = distancia + " pasos";
+        }
+    }
+    document.getElementById('distancia').innerHTML = mensaje; // Actualiza el mensaje de distancia
+    //app.mostrar_mapa(); // Muestra el mapa actualizado
+    mapa.mostrar_mapa(app.matriz);
 }
 
 document.addEventListener('DOMContentLoaded', () => { // Espera a que el DOM esté cargado
