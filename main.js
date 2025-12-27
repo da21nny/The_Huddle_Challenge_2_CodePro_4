@@ -1,9 +1,9 @@
-import { huddleMap, TERRENO } from "./mapaLogica.js"
-import { algoritmo_bfs } from "./algorimo_bfs.js";
-import { mapaRender } from "./mapaRender.js";
+import { MapaLogica, TERRENO } from "./mapaLogica.js"
+import { algoritmo_bfs } from "./algoritmo_bfs.js";
+import { MapaRender } from "./mapaRender.js";
 
-let app; // Instancia global del mapa
-let mapa; // Instancia global del renderizador del mapa
+let mapa_logica; // Instancia global del mapa lógico
+let mapa_render; // Instancia global del renderizador del mapa
 
 function iniciar_proyecto(){ // Función para iniciar el proyecto y asociar eventos a los botones
     const btnGenerar = document.getElementById('btnGenerar'); // Botón para generar la matriz
@@ -23,31 +23,31 @@ function crear_matriz(){ // Genera la matriz del mapa
     
     let previo_inicio = null; // Guarda posición previa de inicio
     let previo_fin = null; // guarda posición previa de fin
-   
-    if(app && app.matriz){ // Si ya existe una instancia previa del mapa
-        if(app.inicial_x !== null && app.inicial_y !== null) previo_inicio = { x: app.inicial_x, y: app.inicial_y };
-        if(app.fin_x !== null && app.fin_y !== null) previo_fin = { x: app.fin_x, y: app.fin_y };
+
+    if(mapa_logica && mapa_logica.matriz){ // Si ya existe una instancia previa del mapa
+        if(mapa_logica.inicial_x !== null && mapa_logica.inicial_y !== null) previo_inicio = { x: mapa_logica.inicial_x, y: mapa_logica.inicial_y };
+        if(mapa_logica.fin_x !== null && mapa_logica.fin_y !== null) previo_fin = { x: mapa_logica.fin_x, y: mapa_logica.fin_y };
     }
 
-    app = new huddleMap(numFila, numColumna); // Crea nueva instancia del mapa
-    mapa = new mapaRender('resultado', numFila, numColumna); // Crea nueva instancia del renderizador del mapa
+    mapa_logica = new MapaLogica(numFila, numColumna); // Crea nueva instancia del mapa
+    mapa_render = new MapaRender('resultado', numFila, numColumna); // Crea nueva instancia del renderizador del mapa
 
     if(previo_inicio){ // Restaura posición previa de inicio
-        app.inicial_x = previo_inicio.x;
-        app.inicial_y = previo_inicio.y;
+        mapa_logica.inicial_x = previo_inicio.x;
+        mapa_logica.inicial_y = previo_inicio.y;
     }
     if(previo_fin){ // Restaura posición previa de fin
-        app.fin_x = previo_fin.x;
-        app.fin_y = previo_fin.y;
+        mapa_logica.fin_x = previo_fin.x;
+        mapa_logica.fin_y = previo_fin.y;
     }
 
-    app.generar_matriz(); // Genera la matriz vacía
-    app.generar_obstaculos(dificultad); // Genera obstáculos según la dificultad
+    mapa_logica.generar_matriz(); // Genera la matriz vacía
+    mapa_logica.generar_obstaculos(dificultad); // Genera obstáculos según la dificultad
     actualizar_interfaz(); // Actualiza la interfaz para mostrar el nuevo mapa
 }
 
 function procesar_coordenadas(){ // Establece las coordenadas de inicio y fin
-    if(!app){ // Verifica que la matriz esté generada
+    if(!mapa_logica){ // Verifica que la matriz esté generada
         alert("Genere primeramente la matriz");
         return;
     }
@@ -57,14 +57,14 @@ function procesar_coordenadas(){ // Establece las coordenadas de inicio y fin
     const fin_x = parseInt(document.getElementById('fin_x').value); // Obtiene coordenada final X
     const fin_y = parseInt(document.getElementById('fin_y').value); // Obtiene coordenada final Y
 
-    app.coordenada_inicio_fin(inicial_x -1 , inicial_y - 1, fin_x - 1, fin_y - 1); // Establece las coordenadas en la matriz
+    mapa_logica.coordenada_inicio_fin(inicial_x -1 , inicial_y - 1, fin_x - 1, fin_y - 1); // Establece las coordenadas en la matriz
     actualizar_interfaz(); // Actualiza la interfaz para reflejar los cambios
 }
 
 function actualizar_interfaz(){ // Actualiza la interfaz después de cambios en el mapa
     let mensaje = "0 pasos";
-    if (app.inicial_x !== null && app.fin_x !== null) { // Verifica que las coordenadas de inicio y fin estén establecidas
-        const distancia = algoritmo_bfs(app, app.inicial_x, app.inicial_y, app.fin_x, app.fin_y); // Ejecuta el algoritmo BFS
+    if (mapa_logica.inicial_x !== null && mapa_logica.fin_x !== null) { // Verifica que las coordenadas de inicio y fin estén establecidas
+        const distancia = algoritmo_bfs(mapa_logica, mapa_logica.inicial_x, mapa_logica.inicial_y, mapa_logica.fin_x, mapa_logica.fin_y); // Ejecuta el algoritmo BFS
 
         if(distancia === -1){ // Si no hay camino disponible
             mensaje = "No hay camino disponible";
@@ -73,24 +73,24 @@ function actualizar_interfaz(){ // Actualiza la interfaz después de cambios en 
         }
     }
     document.getElementById('distancia').innerHTML = mensaje; // Actualiza el mensaje de distancia
-    mapa.mostrar_mapa(app.matriz); // Muestra el mapa actualizado
+    mapa_render.mostrar_mapa(mapa_logica.matriz); // Muestra el mapa actualizado
 }
 
 function gestionar_click_mapa(evento){ // Gestiona los clics en el mapa para modificar terrenos
     // Verifica que la matriz esté generada y que se haya clickeado una celda válida.
-    if (!app || !evento.target.classList.contains('cell')) return; 
+    if (!mapa_logica || !evento.target.classList.contains('cell')) return; 
     // Obtenemos la posición de la celda clickeada
     const fila = parseInt(evento.target.dataset.fila); // Fila de la celda clickeada
     const columna = parseInt(evento.target.dataset.columna); // Columna de la celda clickeada
-    const valorActual = app.matriz[fila][columna]; // Valor actual de la celda clickeada
+    const valorActual = mapa_logica.matriz[fila][columna]; // Valor actual de la celda clickeada
     // LÓGICA: Si es el Inicio (E) ni el Fin (S), no hacemos nada
     if (valorActual === TERRENO.INICIO || valorActual === TERRENO.FIN) return;
     // LÓGICA: Si no es el Inicio (E) ni el Fin (S), cambiamos el terreno        
     if (valorActual === TERRENO.LIBRE || valorActual === TERRENO.CAMINO) {
         const tipo_terreno = Math.floor(Math.random() * 3) + 1; // Valores entre 1 y 3
-        app.matriz[fila][columna] = tipo_terreno; // Asignamos un obstáculo aleatorio
+        mapa_logica.matriz[fila][columna] = tipo_terreno; // Asignamos un obstáculo aleatorio
     } else{ // Si es un obstáculo, lo convertimos en libre
-        app.matriz[fila][columna] = TERRENO.LIBRE; 
+        mapa_logica.matriz[fila][columna] = TERRENO.LIBRE; 
     }
     actualizar_interfaz(); // Actualizamos la interfaz para reflejar los cambios 
 }

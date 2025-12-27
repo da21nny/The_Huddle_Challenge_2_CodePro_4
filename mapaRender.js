@@ -1,6 +1,6 @@
 import { TERRENO } from "./mapaLogica.js";
 
-export class mapaRender{ // Clase para renderizar el mapa en HTML
+export class MapaRender{ // Clase para renderizar el mapa en HTML
     constructor(contenedorID, fila, columna){
         this.contenedorID = document.getElementById(contenedorID); // Contenedor donde se renderiza el mapa
         this.fila = fila; // Número de filas del mapa

@@ -8,7 +8,7 @@ export const TERRENO = {
     CAMINO: 5
 }; // Tipos de terreno posibles
 
-export class huddleMap{
+export class MapaLogica{ // Clase para manejar la lógica del mapa
     constructor (filas, columnas){
         this.filas = filas;
         this.columnas = columnas;
@@ -78,7 +78,7 @@ export class huddleMap{
     coordenada_inicio_fin(inicial_x, inicial_y, fin_x, fin_y){ // Establece las coordenadas de inicio y fin
         if(this.dentro_de_rango(inicial_x, inicial_y) &&
            !(inicial_x === fin_x && inicial_y === fin_y) && 
-           this.posicion_no_terreno(inicial_x, inicial_y)){ // Verifica validez de la posición inicial
+           this.es_transitable(inicial_x, inicial_y)){ // Verifica validez de la posición inicial
 
             if(this.inicial_x !== null && this.inicial_y !== null &&
             !(this.inicial_x === inicial_x && this.inicial_y === inicial_y)){ // Si ya hay un inicio previo diferente
@@ -96,7 +96,7 @@ export class huddleMap{
 
         if(this.dentro_de_rango(fin_x, fin_y) &&
             !(fin_x === inicial_x && fin_y === inicial_y) &&
-            this.posicion_no_terreno(fin_x, fin_y)){ // Verifica validez de la posición final
+            this.es_transitable(fin_x, fin_y)){ // Verifica validez de la posición final
 
             if(this.fin_x !== null && this.fin_y !== null &&
             !(this.fin_x === fin_x && this.fin_y === fin_y)){ // Si ya hay un fin previo diferente
@@ -113,7 +113,7 @@ export class huddleMap{
         }
     }
 
-    posicion_no_terreno(dato_x, dato_y){ // Verifica que la posición no sea un terreno no transitable
+    es_transitable(dato_x, dato_y){ // Verifica si una celda es transitable
         return (this.matriz[dato_y][dato_x] != TERRENO.EDIFICIO &&
            this.matriz[dato_y][dato_x] != TERRENO.AGUA &&
            this.matriz[dato_y][dato_x] != TERRENO.BLOQUEO)
