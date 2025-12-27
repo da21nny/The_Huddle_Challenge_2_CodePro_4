@@ -1,12 +1,13 @@
 import { TERRENO } from "./mapaLogica.js";
 import { Coordenadas } from "./coordenadas.js";
+import { reconstruir_camino } from "./reconstruir_ruta.js";
 
 // Algoritmo de Búsqueda en Anchura (BFS)
-export function algoritmo_bfs(mapa_logico, inicial_x, inicial_y, fin_x, fin_y){
-    for (let fila = 0; fila < mapa_logico.filas; fila++) {
-        for (let columna = 0; columna < mapa_logico.columnas; columna++) {
-            if (mapa_logico.matriz[fila][columna] === TERRENO.CAMINO) { // Limpiar caminos previos
-                mapa_logico.matriz[fila][columna] = TERRENO.LIBRE;
+export function algoritmo_bfs(mapa_logica, inicial_x, inicial_y, fin_x, fin_y){
+    for (let fila = 0; fila < mapa_logica.filas; fila++) {
+        for (let columna = 0; columna < mapa_logica.columnas; columna++) {
+            if (mapa_logica.matriz[fila][columna] === TERRENO.CAMINO) { // Limpiar caminos previos
+                mapa_logica.matriz[fila][columna] = TERRENO.LIBRE;
             }
         }
     }
@@ -37,22 +38,22 @@ export function algoritmo_bfs(mapa_logico, inicial_x, inicial_y, fin_x, fin_y){
         let actual = cola[head++]; // Sacar el primer nodo de la cola
 
         if(actual.esIgual(fin)){ // Si es el nodo final
-            return reconstruir_camino(mapa_logico, padre, fin, inicio); // Reconstruir y devolver pasos
+            return reconstruir_camino(mapa_logica, padre, fin, inicio); // Reconstruir y devolver pasos
         }
 
         for(let i = 0; i < movimientos.length; i++){ // Explorar vecinos
             let vecino = actual.sumar(movimientos[i]); // Calcular coordenadas del vecino
             let clave = vecino.getClave(); // Clave única del vecino
 
-            if(mapa_logico.dentro_de_rango(vecino.coor_x, vecino.coor_y) && !visitados.has(clave)){ // Si está en rango y no visitado
+            if(mapa_logica.dentro_de_rango(vecino.coor_x, vecino.coor_y) && !visitados.has(clave)){ // Si está en rango y no visitado
 
-                const tipo_valor = mapa_logico.matriz[vecino.coor_y][vecino.coor_x]; // Obtener tipo de terreno
+                const tipo_valor = mapa_logica.matriz[vecino.coor_y][vecino.coor_x]; // Obtener tipo de terreno
 
                 if(tipo_valor === TERRENO.LIBRE || tipo_valor === TERRENO.INICIO || tipo_valor === TERRENO.FIN){ // Si es transitable
 
                     if(vecino.esIgual(fin)){ // Si es el nodo final
                         padre[clave] = actual; // Registrar padre
-                        return reconstruir_camino(mapa_logico, padre, fin, inicio); // Reconstruir y devolver pasos
+                        return reconstruir_camino(mapa_logica, padre, fin, inicio); // Reconstruir y devolver pasos
                     } 
 
                     visitados.add(clave); // Marcar como visitado
@@ -64,26 +65,4 @@ export function algoritmo_bfs(mapa_logico, inicial_x, inicial_y, fin_x, fin_y){
     }
     // Si no se encuentra camino, devolver 0
     return -1;
-}
-
-// Función para reconstruir el camino desde el nodo final hasta el inicial
-function reconstruir_camino(mapa_logico, padre, fin, inicio){
-    let actual = fin.getClave(); // Clave del nodo final
-    let pasos = 0; // Contador de pasos
-
-    // Retrocedemos desde el final hacia el inicio usando el mapa de padres
-    while (padre[actual]) {
-        let posicion = padre[actual]; // Obtener la posición del padre
-
-        // Contamos el paso (cada salto padre->hijo es un paso)
-        pasos += 1;
-        
-        // Si la celda no es el punto de inicio, la marcamos con el símbolo de camino
-        if (!posicion.esIgual(inicio)) {
-            mapa_logico.matriz[posicion.coor_y][posicion.coor_x] = TERRENO.CAMINO; // Marcar camino
-        }
-        
-        actual = posicion.getClave();// Mover al padre
-    }
-    return pasos; // Devolver el número total de pasos
 }
