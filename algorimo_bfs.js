@@ -22,6 +22,7 @@ export function algoritmo_bfs(app, inicial_x, inicial_y, fin_x, fin_y){
     // Estructuras para BFS
 
     let cola = [inicio]; // Cola para explorar nodos
+    let head = 0; // Índice del frente de la cola
     let visitados = new Set(); // Conjunto para nodos visitados
     let padre = {}; // Mapa para reconstruir el camino
 
@@ -33,8 +34,8 @@ export function algoritmo_bfs(app, inicial_x, inicial_y, fin_x, fin_y){
                          new Coordenadas(-1, 0)   // arriba
                         ]; // Movimientos posibles
 
-    while(cola.length > 0){ // Mientras haya nodos por explorar
-        let actual = cola.shift(); // Sacar el primer nodo de la cola
+    while(head < cola.length){ // Mientras haya nodos por explorar
+        let actual = cola[head++]; // Sacar el primer nodo de la cola
 
         if(actual.esIgual(fin)){ // Si es el nodo final
             return reconstruir_camino(app, padre, fin, inicio); // Reconstruir y devolver pasos
