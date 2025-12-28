@@ -1,17 +1,9 @@
 import { TERRENO } from "./mapaLogica.js";
 import { Coordenadas } from "./coordenadas.js";
-import { reconstruir_camino } from "./reconstruir_ruta.js";
+import { obtener_lista_camino } from "./lista_camino.js";
 
 // Algoritmo de Búsqueda en Anchura (BFS)
 export function algoritmo_bfs(mapa_logica, inicial_x, inicial_y, fin_x, fin_y){
-    for (let fila = 0; fila < mapa_logica.filas; fila++) {
-        for (let columna = 0; columna < mapa_logica.columnas; columna++) {
-            if (mapa_logica.matriz[fila][columna] === TERRENO.CAMINO) { // Limpiar caminos previos
-                mapa_logica.matriz[fila][columna] = TERRENO.LIBRE;
-            }
-        }
-    }
-
     // Validar que existan puntos de inicio y fin
     if (inicial_x === null || fin_x === null) return 0;
 
@@ -38,7 +30,7 @@ export function algoritmo_bfs(mapa_logica, inicial_x, inicial_y, fin_x, fin_y){
         let actual = cola[head++]; // Sacar el primer nodo de la cola
 
         if(actual.esIgual(fin)){ // Si es el nodo final
-            return reconstruir_camino(mapa_logica, padre, fin, inicio); // Reconstruir y devolver pasos
+            return obtener_lista_camino(padre, fin); // Devolver longitud del camino
         }
 
         for(let i = 0; i < movimientos.length; i++){ // Explorar vecinos
@@ -46,16 +38,8 @@ export function algoritmo_bfs(mapa_logica, inicial_x, inicial_y, fin_x, fin_y){
             let clave = vecino.getClave(); // Clave única del vecino
 
             if(mapa_logica.dentro_de_rango(vecino.coor_x, vecino.coor_y) && !visitados.has(clave)){ // Si está en rango y no visitado
-
                 const tipo_valor = mapa_logica.matriz[vecino.coor_y][vecino.coor_x]; // Obtener tipo de terreno
-
                 if(tipo_valor === TERRENO.LIBRE || tipo_valor === TERRENO.INICIO || tipo_valor === TERRENO.FIN){ // Si es transitable
-
-                    if(vecino.esIgual(fin)){ // Si es el nodo final
-                        padre[clave] = actual; // Registrar padre
-                        return reconstruir_camino(mapa_logica, padre, fin, inicio); // Reconstruir y devolver pasos
-                    } 
-
                     visitados.add(clave); // Marcar como visitado
                     padre[clave] = actual; // Registrar padre
                     cola.push(vecino); // Añadir a la cola para explorar
@@ -63,6 +47,6 @@ export function algoritmo_bfs(mapa_logica, inicial_x, inicial_y, fin_x, fin_y){
             }
         }
     }
-    // Si no se encuentra camino, devolver 0
-    return -1;
+    // Si no se encuentra camino, devolver null
+    return null;
 }
