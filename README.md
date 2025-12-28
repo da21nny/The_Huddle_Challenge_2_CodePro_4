@@ -3,7 +3,7 @@ Proyecto - “THE HUDDLE — Calculadora de Rutas para los Elegidos” - Challen
 
 🧠 Que hice?
 
-Desarrollé una calculdaora de ruta sobre un Tablero 2D en un entorno Web. Utiliza Javascrip para
+Desarrollé una calculadora de ruta sobre un Tablero 2D en un entorno Web. Utiliza Javascrip para
 la parte Logica del tablero y HTML para captura de datos y CSS para el diseño.
 El programa pide al usuario definir:
 
