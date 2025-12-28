@@ -1,6 +1,7 @@
 import { MapaLogica, TERRENO } from "./mapaLogica.js"
 import { algoritmo_bfs } from "./algoritmo_bfs.js";
 import { MapaRender } from "./mapaRender.js";
+import { limpiar_ruta_previa, reconstruir_camino } from "./reconstruir_ruta.js";
 
 let mapa_logica; // Instancia global del mapa lógico
 let mapa_render; // Instancia global del renderizador del mapa
@@ -64,12 +65,15 @@ function procesar_coordenadas(){ // Establece las coordenadas de inicio y fin
 function actualizar_interfaz(){ // Actualiza la interfaz después de cambios en el mapa
     let mensaje = "0 pasos";
     if (mapa_logica.inicial_x !== null && mapa_logica.fin_x !== null) { // Verifica que las coordenadas de inicio y fin estén establecidas
-        const distancia = algoritmo_bfs(mapa_logica, mapa_logica.inicial_x, mapa_logica.inicial_y, mapa_logica.fin_x, mapa_logica.fin_y); // Ejecuta el algoritmo BFS
+        limpiar_ruta_previa(mapa_logica); // Limpia rutas previas en la matriz 
+        const camino_lista = algoritmo_bfs(mapa_logica, mapa_logica.inicial_x, mapa_logica.inicial_y, mapa_logica.fin_x, mapa_logica.fin_y); // Ejecuta el algoritmo BFS
 
-        if(distancia === -1){ // Si no hay camino disponible
-            mensaje = "No hay camino disponible";
+        if(camino_lista !== null){
+            const distancia = reconstruir_camino(mapa_logica, camino_lista, mapa_logica.inicial_x, mapa_logica.inicial_y, mapa_logica.fin_x, mapa_logica.fin_y); // Reconstruye el camino en la matriz
+            mensaje = distancia + " pasos";
+            document.getElementById('distancia').innerHTML = mensaje; // Actualiza el mensaje de distancia
         }else{
-            mensaje = distancia + " pasos"; // Actualiza el mensaje con la distancia encontrada
+            mensaje = "No hay ruta disponible";
         }
     }
     document.getElementById('distancia').innerHTML = mensaje; // Actualiza el mensaje de distancia
