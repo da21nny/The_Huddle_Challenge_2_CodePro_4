@@ -1,5 +1,3 @@
-import { Coordenadas } from "./coordenadas.js";
-
 // Función para obtener la lista de camino desde el mapa de padres
 export function obtener_lista_camino(padre, fin) {
     let camino = []; // Array para almacenar el camino
