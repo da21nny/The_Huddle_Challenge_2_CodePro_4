@@ -1,23 +1,26 @@
 import { TERRENO } from "./mapaLogica.js";
+import { Coordenadas } from "./coordenadas.js";
+// Función para limpiar rutas previas en la matriz
+export function limpiar_ruta_previa(mapa_logica){
+    for (let fila = 0; fila < mapa_logica.filas; fila++) {
+        for (let columna = 0; columna < mapa_logica.columnas; columna++) {
+            if (mapa_logica.matriz[fila][columna] === TERRENO.CAMINO) { // Limpiar caminos previos
+                   mapa_logica.matriz[fila][columna] = TERRENO.LIBRE;
+            }
+        }
+    }
+}
 
 // Función para reconstruir el camino desde el nodo final hasta el inicial
-export function reconstruir_camino(mapa_logica, padre, fin, inicio){
-    let actual = fin.getClave(); // Clave del nodo final
-    let pasos = 0; // Contador de pasos
+export function reconstruir_camino(mapa_logica, lista_camino, inicio_x, inicial_y, fin_x, fin_y){
+    const inicial = new Coordenadas(inicio_x, inicial_y);
+    const final = new Coordenadas(fin_x, fin_y);
+    if(!lista_camino || lista_camino.length === 0) return 0;
 
-    // Retrocedemos desde el final hacia el inicio usando el mapa de padres
-    while (padre[actual]) {
-        let posicion = padre[actual]; // Obtener la posición del padre
-
-        // Contamos el paso (cada salto padre->hijo es un paso)
-        pasos += 1;
-        
-        // Si la celda no es el punto de inicio, la marcamos con el símbolo de camino
-        if (!posicion.esIgual(inicio)) {
-            mapa_logica.matriz[posicion.coor_y][posicion.coor_x] = TERRENO.CAMINO; // Marcar camino
+    for(const coord of lista_camino){
+        if(!coord.esIgual(inicial) && !coord.esIgual(final)){
+            mapa_logica.matriz[coord.coor_y][coord.coor_x] = TERRENO.CAMINO; // Marcar el camino en la matriz
         }
-        
-        actual = posicion.getClave();// Mover al padre
     }
-    return pasos; // Devolver el número total de pasos
+    return lista_camino.length; // Retorna la longitud del camino
 }
