@@ -1,4 +1,4 @@
-# The_Huddle_Challenge_1_CodePro_4
+# The_Huddle_Challenge_2_CodePro_4
 Proyecto - “THE HUDDLE — Calculadora de Rutas para los Elegidos” - The Huddle
 
 🧠 Que hice?
