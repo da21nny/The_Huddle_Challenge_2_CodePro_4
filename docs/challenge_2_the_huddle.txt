@@ -1,0 +1,87 @@
+1. Escenario & Reto
+Cuando escapaste del laberinto en el desafío anterior, pensaste que todo había terminado. La ruta estaba calculada. La salida, asegurada.
+Pero justo cuando cruzabas la puerta final… el mundo se detuvo.
+
+Pantalla negra. Línea de comandos parpadeando.
+Un nuevo mensaje aparece:
+
+“Bien hecho, humano. Pero ese código... es del siglo pasado. Prepárate para la evolución.”
+
+Una nueva fase comienza. Ya no basta con que tu programa funcione. Ahora debe organizarse, escalar y resistir el caos. El futuro es orientado a objetos, y tú debes liderar el cambio.
+
+Tu misión: refactorizar tu calculadora de rutas utilizando Programación Orientada a Objetos (OOP). ¿Listo para convertir funciones sueltas en estructuras elegantes que cualquier arquitecto del software aplaudiría?
+
+2. Habilidades Que Vas a Necesitar
+🧱 Diseño de clases con atributos y métodos bien definidos.
+
+🔄 Refactorización incremental para no romper lo que ya funciona.
+
+👑 Principios de OOP como herencia, encapsulamiento y responsabilidad única.
+
+🧪 Pruebas constantes para verificar que tu lógica sigue viva tras cada cambio.
+
+3. Requisitos Obligatorios (Tu Plan de Evolución)
+Clase Mapa:
+Atributos sugeridos: dimensiones del mapa, obstáculos, coordenadas de inicio y fin.
+
+Métodos: agregar/quitar obstáculos, verificar si una celda es accesible, mostrar el mapa.
+
+Clase CalculadoraDeRutas:
+Métodos para encontrar la ruta más corta, mostrarla y manejar la lógica del algoritmo de búsqueda.
+
+Puedes dividir responsabilidades si lo crees necesario: por ejemplo, tener una clase Ruta que represente un camino.
+
+Aplicación del Paradigma OOP:
+Refactoriza el código base sin romper funcionalidades.
+
+Usa herencia si te resulta útil (por ejemplo, una clase AlgoritmoBusqueda base con diferentes implementaciones).
+
+Asegúrate de que cada clase tenga una sola responsabilidad clara.
+
+Conserva la Interfaz del Usuario:
+El programa debe seguir pidiendo coordenadas al usuario.
+
+Debe seguir mostrando el mapa actualizado y la ruta encontrada.
+
+Si ya tenías OOP implementado, ahora enfócate en mejorar el diseño, nombres, modularidad y mantenibilidad.
+
+4. Entregables, Reglas y Bonus Opcionales
+Entregables:
+
+Código refactorizado con clases bien estructuradas.
+
+Un README que explique:
+
+Cómo dividiste las responsabilidades.
+
+Qué aprendiste del proceso de refactorización.
+
+Qué decisiones tomaste y por qué.
+
+Reglas:
+
+Refactoriza progresivamente: cambia, prueba, repite.
+
+Nombres claros, estructura simple, código limpio.
+
+No se permite eliminar funcionalidades existentes.
+
+Bonus Opcionales:
+
+Implementa interfaces o clases abstractas para distintos tipos de mapas o estrategias de búsqueda.
+
+Agrega logs de decisiones del algoritmo para analizar cómo resuelve rutas.
+
+Haz que tu calculadora sea extensible a mapas en tiempo real (como si alguien añadiera obstáculos mientras se calcula la ruta).
+
+Implementa serialización para guardar mapas y reutilizarlos.
+
+🚀 La Evolución es Inevitable
+Has escapado del laberinto.
+Ahora es momento de construir herramientas que otros puedan usar para escapar también.
+
+En Penguin Academy, no solo resolvemos problemas: los estructuramos para que otros los entiendan, mejoren y escalen.
+Esta es tu oportunidad de escribir código que no solo funcione… sino que trascienda.
+
+¿Estás listo para convertir tu caos en clase?
+Tu código está despertando. Dale forma. 🧠
