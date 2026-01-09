@@ -3,9 +3,10 @@ export const TERRENO = {
     EDIFICIO: 1,
     AGUA: 2,
     BLOQUEO: 3,
-    INICIO: 9,
+    CAMINO: 5,
+    INICIO: 6,
     FIN: 7,
-    CAMINO: 5
+    CAMINO_AGUA: 8
 }; // Tipos de terreno posibles
 
 export class MapaLogica{ // Clase para manejar la lógica del mapa

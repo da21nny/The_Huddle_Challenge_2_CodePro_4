@@ -1,4 +1,5 @@
 import { TERRENO } from "./mapaLogica.js";
+const TAMANHO_CELDA = 35;
 
 export class MapaRender{ // Clase para renderizar el mapa en HTML
     constructor(contenedorID, fila, columna){
@@ -8,52 +9,64 @@ export class MapaRender{ // Clase para renderizar el mapa en HTML
     }
 
     mostrar_mapa(matriz){ // Renderiza la matriz del mapa en el contenedor HTML
-        this.contenedorID.innerHTML = ''; // Limpiar contenido previo
-        this.contenedorID.style.gridTemplateColumns = `repeat(${this.columna}, 35px)`; // Define columnas de la cuadrícula
-        this.contenedorID.style.gridTemplateRows = `repeat(${this.fila}, 35px)`; // Define filas de la cuadrícula
+        this.contenedorID.style = 'grip';
+        this.contenedorID.style.gridTemplateColumns = `repeat(${this.columna}, ${TAMANHO_CELDA}px)`; // Define columnas de la cuadrícula
+        this.contenedorID.style.gridTemplateRows = `repeat(${this.fila}, ${TAMANHO_CELDA}px)`; // Define filas de la cuadrícula
 
-        for(let fila = 0; fila < this.fila; fila++){ // Iterar sobre cada fila
-            for(let columna = 0; columna < this.columna; columna++){ // Iterar sobre cada columna
-                const celdaDiv = document.createElement('div'); // Crear div para la celda
-                celdaDiv.classList.add('cell'); // Añadir clase común a todas las celdas
-                celdaDiv.dataset.fila = fila; // Almacenar fila en dataset
-                celdaDiv.dataset.columna = columna; // Almacenar columna en dataset
-                celdaDiv.style.cursor = "pointer"; // Indica que es clickable
+        const celdas_existentes = this.contenedorID.querySelectorAll('.cell');
 
-                const valor = matriz[fila][columna]; // Obtener el valor del terreno en la celda
+        if(celdas_existentes.length === (this.fila * this.columna)){
+            let i = 0;
+            for(let fila = 0; fila < this.fila; fila++){
+                for(let columna = 0; columna < this.columna; columna++){
+                    const celda_div = celdas_existentes[i];
+                    const valor_terreno = matriz[fila][columna];
 
-                switch(valor){ // Asignar clase y contenido según el tipo de terreno
-                    case TERRENO.EDIFICIO: // Edificio
-                        celdaDiv.textContent = 'X';
-                        celdaDiv.classList.add('edificio');
-                        break;
-                    case TERRENO.AGUA: // Agua
-                        celdaDiv.textContent = 'a';
-                        celdaDiv.classList.add('agua');
-                        break
-                    case TERRENO.BLOQUEO: // Bloqueo
-                        celdaDiv.textContent = 'B';
-                        celdaDiv.classList.add('bloqueo');
-                        break; 
-                    case TERRENO.INICIO: // Inicio
-                        celdaDiv.textContent = 'E';
-                        celdaDiv.classList.add('entrada');
-                        break;
-                    case TERRENO.FIN: // Fin
-                        celdaDiv.textContent = 'S';
-                        celdaDiv.classList.add('salida');
-                        break;
-                    case TERRENO.CAMINO: 
-                        celdaDiv.textContent = '*';
-                        celdaDiv.classList.add('camino');
-                        break;
-                    default: // Terreno libre
-                        celdaDiv.textContent = '.';
-                        celdaDiv.classList.add('libre');
-                        break;
+                    const info = this.obtener_info_visual(valor_terreno);
+                    celda_div.className = `cell ${info.clase}`;
+                    celda_div.textContent = info.texto;
+                    i++;
                 }
-                this.contenedorID.appendChild(celdaDiv); // Añadir la celda al contenedor
             }
+        }else {
+            this.contenedorID.innerHTML = '';
+            for(let fila = 0; fila < this.fila; fila++){
+                for(let columna = 0; columna < this.columna; columna++){
+                    const celda_div = document.createElement('div');
+                    const valor_terreno = matriz[fila][columna];
+                    const info = this.obtener_info_visual(valor_terreno);
+
+                    celda_div.classList.add('cell');
+                    celda_div.classList.add(info.clase);
+                    celda_div.textContent = info.texto;
+
+                    celda_div.dataset.fila = fila;
+                    celda_div.dataset.columna = columna;
+
+                    this.contenedorID.appendChild(celda_div);
+                }
+            }
+        }
+    }
+
+    obtener_info_visual(tipo_terreno){
+        switch(tipo_terreno){
+            case TERRENO.EDIFICIO:
+                return { texto: 'x', clase: 'edificio' };
+            case TERRENO.AGUA:
+                return { texto: 'a', clase: 'agua' };
+            case TERRENO.BLOQUEO:
+                return { texto: 'B', clase: 'bloqueo' };
+            case TERRENO.INICIO:
+                return { texto: 'I', clase: 'inicio' };
+            case TERRENO.FIN:
+                return { texto: 'F', clase: 'fin' };
+            case TERRENO.CAMINO:
+                return { texto: '*', clase: 'camino' };
+            case TERRENO.CAMINO_AGUA:
+                return { texto: 'A', clase: 'camino_agua' };
+            default:
+                return { texto: '.', clase: 'libre' };
         }
     }
 }
