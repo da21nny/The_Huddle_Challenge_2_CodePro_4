@@ -68,7 +68,8 @@ function actualizar_interfaz(){ // Actualiza la interfaz después de cambios en 
 
     if (mapa_logica.inicial_x !== null && mapa_logica.fin_x !== null) { // Verifica que las coordenadas de inicio y fin estén establecidas
         limpiar_ruta_previa(mapa_logica); // Limpia rutas previas en la matriz 
-        const pasos = new algoritmo_a_star(mapa_logica, mapa_logica.inicial_x, mapa_logica.inicial_y, mapa_logica.fin_x, mapa_logica.fin_y);
+        const camino = new algoritmo_a_star(mapa_logica.matriz, mapa_logica.inicial_x, mapa_logica.inicial_y, mapa_logica.fin_x, mapa_logica.fin_y);
+        const pasos = camino.encontrar_camino_a_star();
 
         if(pasos !== null){
             mensaje = pasos + " pasos";

@@ -3,7 +3,7 @@ import { reconstruir_camino } from "./reconstruir_ruta.js";
 
 export class algoritmo_a_star{
     constructor(tablero, inicio_x, inicio_y, fin_x, fin_y){
-        this.matriz = tablero;
+        this.tablero = tablero;
         this.inicio_x = inicio_x;
         this.inicio_y = inicio_y;
         this.fin_x = fin_x;
@@ -47,8 +47,8 @@ export class algoritmo_a_star{
                 let nuevo_x = actual.x + movimientos[m][0];
                 let nuevo_y = actual.y + movimientos[m][1];
 
-                if(nuevo_x >= 0 && nuevo_x < tablero[0].length && nuevo_y >= 0 && nuevo_y < tablero.length){
-                    let tipo_terreno = tablero[nuevo_y][nuevo_x];
+                if(nuevo_x >= 0 && nuevo_x < this.tablero[0].length && nuevo_y >= 0 && nuevo_y < this.tablero.length){
+                    let tipo_terreno = this.tablero[nuevo_y][nuevo_x];
                     let clave = `${nuevo_x},${nuevo_y}`;
 
                     if(tipo_terreno === TERRENO.EDIFICIO || tipo_terreno === TERRENO.BLOQUEO) continue;
