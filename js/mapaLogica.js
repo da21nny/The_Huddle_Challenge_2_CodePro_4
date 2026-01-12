@@ -9,6 +9,8 @@ export const TERRENO = {
     CAMINO_AGUA: 8
 }; // Tipos de terreno posibles
 
+const PORCENTAJE_OBSTACULO = 0.5 // Porcentaje de obstáculos en la matriz
+
 export class MapaLogica{ // Clase para manejar la lógica del mapa
     constructor (filas, columnas){
         this.filas = filas;
@@ -60,8 +62,8 @@ export class MapaLogica{ // Clase para manejar la lógica del mapa
         return true;
     }
 
-    generar_obstaculos(dificultad){ // Genera obstáculos aleatorios en la matriz según la dificultad
-        const numObstaculos = Math.floor((this.filas * this.columnas) * dificultad); // Número de obstáculos a generar
+    generar_obstaculos(){ // Genera obstáculos aleatorios en la matriz según la dificultad
+        const numObstaculos = Math.floor((this.filas * this.columnas) * PORCENTAJE_OBSTACULO); // Número de obstáculos a generar
         for(let i = 0; i < numObstaculos; i++){
             const fila = Math.floor(Math.random() * this.filas); // Fila aleatoria
             const columna = Math.floor(Math.random() * this.columnas); // Columna aleatoria

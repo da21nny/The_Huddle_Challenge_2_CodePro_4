@@ -64,7 +64,7 @@ export class MapaRender{ // Clase para renderizar el mapa en HTML
             case TERRENO.CAMINO:
                 return { texto: '*', clase: 'camino' };
             case TERRENO.CAMINO_AGUA:
-                return { texto: 'A', clase: 'camino_agua' };
+                return { texto: 'a', clase: 'camino_agua' };
             default:
                 return { texto: '.', clase: 'libre' };
         }
