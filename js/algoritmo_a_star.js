@@ -1,8 +1,9 @@
 import { TERRENO } from "./mapaLogica.js";
-import { reconstruir_camino } from "./reconstruir_ruta.js";
+import { AlgoritmoBusqueda } from "./reconstruir_ruta.js";
 
-export class algoritmo_a_star{
+export class AlgoritmoAStar extends AlgoritmoBusqueda {
     constructor(tablero, inicio_x, inicio_y, fin_x, fin_y){
+        super();    
         this.tablero = tablero;
         this.inicio_x = inicio_x;
         this.inicio_y = inicio_y;
@@ -34,7 +35,7 @@ export class algoritmo_a_star{
             let actual = lista_abierta[0];
 
             if(actual.x === this.fin_x && actual.y === this.fin_y){
-                return reconstruir_camino(this.tablero, actual);
+                return this.reconstruir_camino(this.tablero, actual);
             }
 
             lista_abierta.splice(0, 1);

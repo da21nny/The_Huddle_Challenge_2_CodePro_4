@@ -1,8 +1,6 @@
 import { MapaLogica, TERRENO } from "./mapaLogica.js"
-import { algoritmo_bfs } from "./algoritmo_bfs.js";
 import { MapaRender } from "./mapaRender.js";
-import { limpiar_ruta_previa, reconstruir_camino } from "./reconstruir_ruta.js";
-import { algoritmo_a_star } from "./algoritmo_a_star.js";
+import { AlgoritmoAStar } from "./algoritmo_a_star.js";
 
 let mapa_logica; // Instancia global del mapa lógico
 let mapa_render; // Instancia global del renderizador del mapa
@@ -20,8 +18,6 @@ function iniciar_proyecto(){ // Función para iniciar el proyecto y asociar even
 function crear_matriz(){ // Genera la matriz del mapa
     const numFila = parseInt(document.getElementById('fila').value); // Obtiene número de filas
     const numColumna = parseInt(document.getElementById('columna').value); // Obtiene número de columnas
-    const radio_select = document.querySelector('input[name="dificultad"]:checked'); // Obtiene la dificultad seleccionada
-    const dificultad = radio_select ? parseFloat(radio_select.value) : 0.1; // Valor por defecto si no hay selección
     
     let previo_inicio = null; // Guarda posición previa de inicio
     let previo_fin = null; // guarda posición previa de fin
@@ -44,7 +40,7 @@ function crear_matriz(){ // Genera la matriz del mapa
     }
 
     mapa_logica.generar_matriz(); // Genera la matriz vacía
-    mapa_logica.generar_obstaculos(dificultad); // Genera obstáculos según la dificultad
+    mapa_logica.generar_obstaculos(); // Genera obstáculos según la dificultad
     actualizar_interfaz(); // Actualiza la interfaz para mostrar el nuevo mapa
 }
 
@@ -67,8 +63,8 @@ function actualizar_interfaz(){ // Actualiza la interfaz después de cambios en 
     let mensaje = "0 pasos";
 
     if (mapa_logica.inicial_x !== null && mapa_logica.fin_x !== null) { // Verifica que las coordenadas de inicio y fin estén establecidas
-        limpiar_ruta_previa(mapa_logica); // Limpia rutas previas en la matriz 
-        const camino = new algoritmo_a_star(mapa_logica.matriz, mapa_logica.inicial_x, mapa_logica.inicial_y, mapa_logica.fin_x, mapa_logica.fin_y);
+        mapa_logica.limpiar_camino(); // Limpia rutas previas en la matriz 
+        const camino = new AlgoritmoAStar(mapa_logica.matriz, mapa_logica.inicial_x, mapa_logica.inicial_y, mapa_logica.fin_x, mapa_logica.fin_y);
         const pasos = camino.encontrar_camino_a_star();
 
         if(pasos !== null){

@@ -116,6 +116,17 @@ export class MapaLogica{ // Clase para manejar la lógica del mapa
         }
     }
 
+    // Función para limpiar rutas previas en la matriz
+    limpiar_camino(){ 
+        for (let fila = 0; fila < this.filas; fila++) {
+            for (let columna = 0; columna < this.columnas; columna++) {
+                if (this.matriz[fila][columna] === TERRENO.CAMINO) { // Limpiar caminos previos
+                       this.matriz[fila][columna] = TERRENO.LIBRE;
+                }
+            }
+        }
+    }
+
     es_transitable(dato_x, dato_y){ // Verifica si una celda es transitable
         return (this.matriz[dato_y][dato_x] != TERRENO.EDIFICIO &&
            this.matriz[dato_y][dato_x] != TERRENO.AGUA &&
