@@ -11,10 +11,10 @@ export class AlgoritmoAStar extends AlgoritmoBusqueda {
         this.fin_y = fin_y;
     }
 
-    encontrar_camino_a_star(){
-        let lista_abierta = [];
-        let mapa_abierto = new Map();
-        let lista_cerrada = new Set();
+    encontrarCaminoAStar(){
+        let listaAbierta = [];
+        let mapaAbierto = new Map();
+        let listaCerrada = new Set();
 
         let inicio = {
             x: this.inicio_x,
@@ -27,20 +27,20 @@ export class AlgoritmoAStar extends AlgoritmoBusqueda {
 
         inicio.f = inicio.g + inicio.h;
 
-        lista_abierta.push(inicio);
-        mapa_abierto.set(`${inicio.x},${inicio.y}`, inicio);
+        listaAbierta.push(inicio);
+        mapaAbierto.set(`${inicio.x},${inicio.y}`, inicio);
 
-        while(lista_abierta.length > 0){
-            lista_abierta.sort((a,b) => a.f - b.f);
-            let actual = lista_abierta[0];
+        while(listaAbierta.length > 0){
+            listaAbierta.sort((a,b) => a.f - b.f);
+            let actual = listaAbierta[0];
 
             if(actual.x === this.fin_x && actual.y === this.fin_y){
-                return this.reconstruir_camino(this.tablero, actual);
+                return this.reconstruirCamino(this.tablero, actual);
             }
 
-            lista_abierta.splice(0, 1);
-            mapa_abierto.delete(`${actual.x},${actual.y}`)
-            lista_cerrada.add(`${actual.x},${actual.y}`)
+            listaAbierta.splice(0, 1);
+            mapaAbierto.delete(`${actual.x},${actual.y}`)
+            listaCerrada.add(`${actual.x},${actual.y}`)
 
             let movimientos = [[0, 1], [0, -1], [1, 0], [-1, 0]]; 
 
@@ -54,13 +54,13 @@ export class AlgoritmoAStar extends AlgoritmoBusqueda {
 
                     if(tipo_terreno === TERRENO.EDIFICIO || tipo_terreno === TERRENO.BLOQUEO) continue;
 
-                    if(lista_cerrada.has(clave)) continue;
+                    if(listaCerrada.has(clave)) continue;
 
                     let costo_paso = (tipo_terreno === TERRENO.AGUA) ? 5 : 1;
 
                     let g_tentativo = actual.g + costo_paso;
 
-                    let vecino = mapa_abierto.get(clave);
+                    let vecino = mapaAbierto.get(clave);
 
                     if(!vecino || g_tentativo < vecino.g){
                         let nuevo_nodo = {
@@ -73,8 +73,8 @@ export class AlgoritmoAStar extends AlgoritmoBusqueda {
                         nuevo_nodo.f = nuevo_nodo.g + nuevo_nodo.h;
 
                         if(!vecino){
-                            lista_abierta.push(nuevo_nodo);
-                            mapa_abierto.set(clave, nuevo_nodo);
+                            listaAbierta.push(nuevo_nodo);
+                            mapaAbierto.set(clave, nuevo_nodo);
                         } else{
                             vecino.g = nuevo_nodo.g;
                             vecino.f = nuevo_nodo.f;
