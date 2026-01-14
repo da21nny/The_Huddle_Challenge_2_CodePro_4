@@ -2,11 +2,11 @@ import { TERRENO } from "./mapaLogica.js";
 import { AlgoritmoBusqueda } from "./reconstruir_ruta.js";
 
 export class AlgoritmoAStar extends AlgoritmoBusqueda {
-    constructor(tablero, inicio_x, inicio_y, fin_x, fin_y){
+    constructor(tablero, inicioX, inicioY, fin_x, fin_y){
         super();    
         this.tablero = tablero;
-        this.inicio_x = inicio_x;
-        this.inicio_y = inicio_y;
+        this.inicioX = inicioX;
+        this.inicioY = inicioY;
         this.fin_x = fin_x;
         this.fin_y = fin_y;
     }
@@ -17,10 +17,10 @@ export class AlgoritmoAStar extends AlgoritmoBusqueda {
         let listaCerrada = new Set();
 
         let inicio = {
-            x: this.inicio_x,
-            y: this.inicio_y,
+            x: this.inicioX,
+            y: this.inicioY,
             g: 0,
-            h: this.heuristica(this.inicio_x, this.inicio_y, this.fin_x, this.fin_y),
+            h: this.heuristica(this.inicioX, this.inicioY, this.fin_x, this.fin_y),
             f: 0,
             padre: null
         };
@@ -87,7 +87,7 @@ export class AlgoritmoAStar extends AlgoritmoBusqueda {
         return null;
     }
 
-    heuristica(inicio_x, inicio_y, fin_x, fin_y){
-        return Math.abs(inicio_x - fin_x) + Math.abs(inicio_y - fin_y);
+    heuristica(inicioX, inicioY, fin_x, fin_y){
+        return Math.abs(inicioX - fin_x) + Math.abs(inicioY - fin_y);
     }
 }

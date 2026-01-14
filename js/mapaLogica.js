@@ -116,10 +116,13 @@ export class MapaLogica{ // Clase para manejar la lógica del mapa
 
     // Función para limpiar rutas previas en la matriz
     limpiarCamino(){ 
-        for (let fila = 0; fila < this.fila; fila++) {
-            for (let columna = 0; columna < this.columna; columna++) {
-                if (this.matriz[fila][columna] === TERRENO.CAMINO) { // Limpiar caminos previos
-                       this.matriz[fila][columna] = TERRENO.LIBRE;
+        for (let y = 0; y < this.fila; y++) {
+            for (let x = 0; x < this.columna; x++) {
+                if (this.matriz[y][x] === TERRENO.CAMINO) { // Limpiar caminos previos
+                       this.matriz[y][x] = TERRENO.LIBRE;
+                }
+                if (this.matriz[y][x] === TERRENO.CAMINO_AGUA) {
+                    this.matriz[y][x] = TERRENO.AGUA; // Si es camino sobre agua, lo vuelve agua
                 }
             }
         }
