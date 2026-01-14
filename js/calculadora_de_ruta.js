@@ -10,4 +10,7 @@ export class CalculadoraDeRuta{
         this.finY = finY;
     }
     
+    calcularRuta(){
+        
+    }
 }
