@@ -1,9 +1,10 @@
 import { MapaLogica, TERRENO } from "./mapaLogica.js"
 import { MapaRender } from "./mapaRender.js";
-import { AlgoritmoAStar } from "./algoritmo_a_star.js";
+import { CalculadoraDeRuta } from "./calculadora_de_ruta.js";
 
 let mapaLogica; // Instancia global del mapa lógico
 let mapaRender; // Instancia global del renderizador del mapa
+let calculadoraRuta;
 
 function iniciarProyecto(){ // Función para iniciar el proyecto y asociar eventos a los botones
     const btnGenerar = document.getElementById('btnGenerar'); // Botón para generar la matriz
@@ -53,12 +54,8 @@ function procesarCoordenadas(){ // Establece las coordenadas de inicio y fin
     const inicio = {x: parseInt(document.getElementById('inicioX').value) - 1, y: parseInt(document.getElementById('inicioY').value) -1};
     const fin = {x: parseInt(document.getElementById('finX').value) - 1, y: parseInt(document.getElementById('finY').value) - 1}
 
-    /*const inicio.x = parseInt(document.getElementById('inicio.x').value); // Obtiene coordenada inicial X
-    const inicio.y = parseInt(document.getElementById('inicio.y').value); // Obtiene coordenada inicial Y
-    const fin.x = parseInt(document.getElementById('fin.x').value); // Obtiene coordenada final X
-    const fin.y = parseInt(document.getElementById('fin.y').value); // Obtiene coordenada final Y */
-
     mapaLogica.coordenadaInicioFin(inicio, fin); // Establece las coordenadas en la matriz
+
     actualizarInterfaz(); // Actualiza la interfaz para reflejar los cambios
 }
 
@@ -67,8 +64,9 @@ function actualizarInterfaz(){ // Actualiza la interfaz después de cambios en e
 
     if (mapaLogica.inicio.x !== null && mapaLogica.fin.x !== null) { // Verifica que las coordenadas de inicio y fin estén establecidas
         mapaLogica.limpiarCamino(); // Limpia rutas previas en la matriz 
-        const camino = new AlgoritmoAStar(mapaLogica.matriz, mapaLogica.inicio.x, mapaLogica.inicio.y, mapaLogica.fin.x, mapaLogica.fin.y);
-        const pasos = camino.encontrarCaminoAStar();
+       
+        calculadoraRuta = new CalculadoraDeRuta(mapaLogica.matriz, mapaLogica.inicio.x, mapaLogica.inicio.y, mapaLogica.fin.x, mapaLogica.fin.y);
+        const pasos = calculadoraRuta.calcularRuta();
 
         if(pasos !== null){
             mensaje = pasos + " pasos";

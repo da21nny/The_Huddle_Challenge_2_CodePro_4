@@ -1,9 +1,9 @@
 import { TERRENO } from "./mapaLogica.js";
 
 // Función para reconstruir el camino desde el nodo final hasta el inicial
-export class AlgoritmoBusqueda {
+export class ReconstruirRuta {
 
-    reconstruirCamino(tablero, actual){
+    reconstruirRuta(tablero, actual){
         let temporal = actual;
         let pasos = 0;
 
