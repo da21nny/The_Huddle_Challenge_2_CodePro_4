@@ -61,7 +61,7 @@ function procesarCoordenadas(){ // Establece las coordenadas de inicio y fin
 
 function actualizarInterfaz(){ // Actualiza la interfaz después de cambios en el mapa    
     let mensaje = "0 pasos";
-    calculadoraRuta = new CalculadoraDeRuta(mapaLogica.matriz, mapaLogica.fila, mapaLogica.columna); // Nueva instancia de calculadora de ruta
+    calculadoraRuta = new CalculadoraDeRuta(mapaLogica.matriz); // Nueva instancia de calculadora de ruta
 
     if (mapaLogica.inicio.x !== null && mapaLogica.fin.x !== null) { // Verifica que las coordenadas de inicio y fin estén establecidas
         mensaje = calculadoraRuta.calcularRuta(mapaLogica.inicio.x, mapaLogica.inicio.y, mapaLogica.fin.x, mapaLogica.fin.y); // Calcula la ruta
