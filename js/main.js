@@ -4,7 +4,7 @@ import { CalculadoraDeRuta } from "./calculadora_de_ruta.js";
 
 let mapaLogica; // Instancia global del mapa lógico
 let mapaRender; // Instancia global del renderizador del mapa
-let calculadoraRuta;
+let calculadoraRuta; // Instancia global de la calculadora de ruta
 
 function iniciarProyecto(){ // Función para iniciar el proyecto y asociar eventos a los botones
     const btnGenerar = document.getElementById('btnGenerar'); // Botón para generar la matriz
@@ -61,19 +61,10 @@ function procesarCoordenadas(){ // Establece las coordenadas de inicio y fin
 
 function actualizarInterfaz(){ // Actualiza la interfaz después de cambios en el mapa    
     let mensaje = "0 pasos";
+    calculadoraRuta = new CalculadoraDeRuta(mapaLogica.matriz, mapaLogica.fila, mapaLogica.columna); // Nueva instancia de calculadora de ruta
 
     if (mapaLogica.inicio.x !== null && mapaLogica.fin.x !== null) { // Verifica que las coordenadas de inicio y fin estén establecidas
-        mapaLogica.limpiarCamino(); // Limpia rutas previas en la matriz 
-       
-        calculadoraRuta = new CalculadoraDeRuta(mapaLogica.matriz, mapaLogica.inicio.x, mapaLogica.inicio.y, mapaLogica.fin.x, mapaLogica.fin.y);
-        const pasos = calculadoraRuta.calcularRuta();
-
-        if(pasos !== null){
-            mensaje = pasos + " pasos";
-            document.getElementById('distancia').innerHTML = mensaje; // Actualiza el mensaje de distancia
-        }else{
-            mensaje = "No hay ruta disponible";
-        }
+        mensaje = calculadoraRuta.calcularRuta(mapaLogica.inicio.x, mapaLogica.inicio.y, mapaLogica.fin.x, mapaLogica.fin.y); // Calcula la ruta
     }
     document.getElementById('distancia').innerHTML = mensaje; // Actualiza el mensaje de distancia
     mapaRender.mostrarMapa(mapaLogica.matriz); // Muestra el mapa actualizado
