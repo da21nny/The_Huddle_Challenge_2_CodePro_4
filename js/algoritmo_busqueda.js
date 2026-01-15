@@ -1,27 +1,27 @@
-import { TERRENO } from "./mapaLogica.js";
+import { TERRENO } from "./mapaLogica.js"; // Importa los tipos de terreno
 
-export class AlgoritmoBusqueda{
-    constructor(tablero, inicioX, inicioY, fin_x, fin_y){
+export class AlgoritmoBusqueda{  // Clase base para algoritmos de búsqueda
+    constructor(tablero, inicioX, inicioY, finX, finY){ // Constructor que recibe el tablero y las coordenadas de inicio y fin
         this.tablero = tablero;
         this.inicioX = inicioX;
         this.inicioY = inicioY;
-        this.fin_x = fin_x;
-        this.fin_y = fin_y;
+        this.finX = finX;
+        this.finY = finY;
     }
     
-    heuristica(inicioX, inicioY, fin_x, fin_y){
-        return Math.abs(inicioX - fin_x) + Math.abs(inicioY - fin_y);
+    heuristica(inicioX, inicioY, finX, finY){ // Heurística de distancia Manhattan
+        return Math.abs(inicioX - finX) + Math.abs(inicioY - finY); // Calcula la distancia Manhattan y la devuelve
     }
 
-    reconstruirRuta(tablero, actual){
-        let temporal = actual;
-        let pasos = 0;
+    reconstruirRuta(tablero, actual){ // Reconstruye la ruta desde el nodo final hasta el inicio
+        let temporal = actual; // Nodo temporal para recorrer la ruta
+        let pasos = 0; // Contador de pasos
 
-         while(temporal.padre !== null){
-            if(tablero[temporal.y][temporal.x] !== TERRENO.FIN &&
-                tablero[temporal.y][temporal.x] !== TERRENO.INICIO){
+         while(temporal.padre !== null){ // Mientras no se llegue al nodo inicial
+            if(tablero[temporal.y][temporal.x] !== TERRENO.FIN && 
+                tablero[temporal.y][temporal.x] !== TERRENO.INICIO){ // No sobreescribe inicio o fin
                     if (tablero[temporal.y][temporal.x] === TERRENO.AGUA) { // Marcar camino sobre agua
-                        tablero[temporal.y][temporal.x] = TERRENO.CAMINO_AGUA;
+                        tablero[temporal.y][temporal.x] = TERRENO.CAMINO_AGUA; 
                     } else { // Marcar camino sobre terreno libre
                         tablero[temporal.y][temporal.x] = TERRENO.CAMINO;
                     }
@@ -29,6 +29,6 @@ export class AlgoritmoBusqueda{
             temporal = temporal.padre; // Mover al nodo padre
             pasos++; // Incrementar contador de pasos
         }
-        return pasos; 
+        return pasos;  // Devuelve el número de pasos en la ruta
     }
 }

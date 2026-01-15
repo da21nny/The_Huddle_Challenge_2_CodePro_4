@@ -30,6 +30,7 @@ function crearMatriz(){ // Genera la matriz del mapa
 
     mapaLogica = new MapaLogica(numFila, numColumna); // Crea nueva instancia del mapa
     mapaRender = new MapaRender('resultado', numFila, numColumna); // Crea nueva instancia del renderizador del mapa
+    calculadoraRuta = new CalculadoraDeRuta(mapaLogica); // Nueva instancia de calculadora de ruta
 
     if(previoInicio){ // Restaura posición previa de inicio
         mapaLogica.inicio.x = previoInicio.x;
@@ -61,11 +62,11 @@ function procesarCoordenadas(){ // Establece las coordenadas de inicio y fin
 
 function actualizarInterfaz(){ // Actualiza la interfaz después de cambios en el mapa    
     let mensaje = "0 pasos";
-    calculadoraRuta = new CalculadoraDeRuta(mapaLogica.matriz); // Nueva instancia de calculadora de ruta
 
     if (mapaLogica.inicio.x !== null && mapaLogica.fin.x !== null) { // Verifica que las coordenadas de inicio y fin estén establecidas
-        mensaje = calculadoraRuta.calcularRuta(mapaLogica.inicio.x, mapaLogica.inicio.y, mapaLogica.fin.x, mapaLogica.fin.y); // Calcula la ruta
+        mensaje = calculadoraRuta.calcularRuta(mapaLogica.inicio.x, mapaLogica.inicio.y, mapaLogica.fin.x, mapaLogica.fin.y); // Calcula la ruta y obtiene el mensaje
     }
+
     document.getElementById('distancia').innerHTML = mensaje; // Actualiza el mensaje de distancia
     mapaRender.mostrarMapa(mapaLogica.matriz); // Muestra el mapa actualizado
 }
