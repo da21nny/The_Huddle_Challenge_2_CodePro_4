@@ -114,6 +114,20 @@ export class MapaLogica{ // Clase para manejar la lógica del mapa
         }
     }
 
+    alternarObstaculo(fila, columna){ // Método para alternar un obstáculo en una posición específica
+        if(!this.dentroDeRango(columna, fila)) return; // Verifica rango válido
+        const valorActual = this.matriz[fila][columna]; // Tipo de terreno actual
+        // LÓGICA: Si es el Inicio (E) ni el Fin (S), no hacemos nada
+        if (valorActual === TERRENO.INICIO || valorActual === TERRENO.FIN) return;
+        // LÓGICA: Si no es el Inicio (E) ni el Fin (S), cambiamos el terreno        
+        if (valorActual === TERRENO.LIBRE || valorActual === TERRENO.CAMINO) {
+            const tipo_terreno = Math.floor(Math.random() * 3) + 1; // Valores entre 1 y 3
+            this.matriz[fila][columna] = tipo_terreno; // Asignamos un obstáculo aleatorio
+        } else{ // Si es un obstáculo, lo convertimos en libre
+            this.matriz[fila][columna] = TERRENO.LIBRE; 
+        }
+    }
+
     esTransitable(datoX, datoY){ // Verifica si una celda es transitable
         return (this.matriz[datoY][datoX] != TERRENO.EDIFICIO &&
            this.matriz[datoY][datoX] != TERRENO.AGUA &&

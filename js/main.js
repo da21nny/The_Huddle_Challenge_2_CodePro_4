@@ -77,16 +77,7 @@ function gestionarClickMapa(evento){ // Gestiona los clics en el mapa para modif
     // Obtenemos la posición de la celda clickeada
     const fila = parseInt(evento.target.dataset.fila); // Fila de la celda clickeada
     const columna = parseInt(evento.target.dataset.columna); // Columna de la celda clickeada
-    const valorActual = mapaLogica.matriz[fila][columna]; // Valor actual de la celda clickeada
-    // LÓGICA: Si es el Inicio (E) ni el Fin (S), no hacemos nada
-    if (valorActual === TERRENO.INICIO || valorActual === TERRENO.FIN) return;
-    // LÓGICA: Si no es el Inicio (E) ni el Fin (S), cambiamos el terreno        
-    if (valorActual === TERRENO.LIBRE || valorActual === TERRENO.CAMINO) {
-        const tipo_terreno = Math.floor(Math.random() * 3) + 1; // Valores entre 1 y 3
-        mapaLogica.matriz[fila][columna] = tipo_terreno; // Asignamos un obstáculo aleatorio
-    } else{ // Si es un obstáculo, lo convertimos en libre
-        mapaLogica.matriz[fila][columna] = TERRENO.LIBRE; 
-    }
+    mapaLogica.alternarObstaculo(fila, columna); // metodo para alternar obstáculo en la posición dada
     actualizarInterfaz(); // Actualizamos la interfaz para reflejar los cambios 
 }
 
