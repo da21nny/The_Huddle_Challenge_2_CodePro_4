@@ -1,33 +1,51 @@
 The_Huddle_Challenge_2_CodePro_4
 Proyecto - “Código Heredado: El Renacer de los Objetos” - The Huddle
 
-🧠 Que hice?
+🧠 Cómo dividiste las responsabilidades.
+Dividi el proyecto en varias clases para una mejor implementacion del principio de responsabilidad.
+1. Main:
+- Encargado de la conexion con el html y ejecucion ordenada del proyecto.
+- Encargado de la crecion de los objetos necesarios para la ejecucion del proyecto
+- Recibe todos los datos necesarios que el usuario ingresa.
+- Actua de mediador entre la entrada de datos de usuario con el manejo logico del proyecto.
 
-Desarrollé una calculadora de ruta sobre un Tablero 2D en un entorno Web. Utiliza Javascrip para la parte Logica del tablero y HTML para captura de datos y CSS para el diseño. El programa pide al usuario definir:
+2. Mapa Render:
+- Encargado principal del manejo visual del tablero en el html
+- Encargado de la creacion dinamica de div y cell en la estructura html
 
-- Dimension del Tablero (Fila y Columnas).
-- La coordenada de Inicio (inicio_x, inicio_y).
-- La coordenada de Fin (fin_x, fin_y).
-- Una vez definido la dimension y dificultad, el mapa genera obstaculos estaticos (Edificio, Agua, Bloqueo) de forma aleatoria y la cantidad varia segun la dificultas (facil = menos obstaculos - extremo = mas obstaculos).
+3. Mapa Logica:
+Encargado del manejo y creacion logico de la Clase MapaLogico
+Incluye los sgtes metodos:
+- Crear tablero.
+- Colocar obstaculos en el tablero.
+- Generacion aleatoria de obstaculos para colocacion en el tablero.
+- Colocacion de coordenadas de Inicio y Fin.
+- Alternar obstaculos (Permite cambiar de forma manual los obstaculos).
+- Validacion de que es transitable y dentro de rango.
 
-Luego se ingresa las coordenadas de inicio y fin y se integran al mapa para luego con una funcion buscar el camino mas corto entre las coordenadas dentro del mapa, evitando los obstaculos y visualizando en tiempo real.
+4. Clase Calculadora de Ruta:
+Incluye los sgtes metodos.
+- Calcular Ruta.
+Permite la creacion del objeto para instanciar metodo para la utilizacion del algoritmo implementado.
+- Limpiar Ruta.
+Permite limpiar el camino antiguo para visualizar mejor el nuevo camino generado.
 
-El programa permite interactuar con el tablero, clickeando una celda y cambiar los obstaculos por caminos libres o viceversa (Se agrega un tipo de obstaculo de forma aleatoria). Si se coloca un obstaculo en el camino señalado, el algoritmo se actualiza y busca otros caminos disponibles (Si no hay camino, se imprime mensaje que no existe camino disponible).
+5. Algoritmo A*:
+- Encargado principalmente del manejo logico del algoritmo que permite encontrar el camino mas optimo.
+- Hereda las propiedades de una clase para reconstruir el camino en el tablero
 
-🔍 Que algoritmo utilice?
+6. Algoritmo Busqueda:
+Implementa algunas funciones que pueden ser utilizadas en otros tipos de algoritmos
+- Metodo Heuristica para saber la distancia estimada del punto actual al punto final.
+- Metodo Reconstruir Ruta para marcar en el tablero el camino correspondiente (puede ser usado en distintos tipos de algoritmos BFS, Dijkstra o A*)
 
-Utilice el algoritmo A* porque:
+🔍 Qué aprendiste del proceso de refactorizació.
+- Aprendi a dividir responsabilidades para un mejor manejo del codigo.
+- A como manejar las clases y sus metodos.
+- Separar codigo reutilizable para mejor aprovechamiento en futuras implementaciones.
 
-- Me permite encontrar el camino mas optimo teniendo los puntos de origen y fin, utiliza una formula heuristica para priorizar caminos prometedores.
-- Me permmite asignar costo a un obstaculo (en este caso agua con un costo de 5) para que pueda atravesar en el caso que no encuentre un camino libre.
-- Es mas inteligente, porque tiene brujula que me dice donde esta la salida y cada paso tiene un peso que va diciendo si esta en el camino correcto a la salida
-- El programa llama al algoritmo para calcular el camino optimo y luego utiliza una tecnica llamada backtraking (recorre de fin a inicio) para recuperar el camino y marcar en el tablero con (*).
 
-📚 Que aprendi?
+📚 Qué decisiones tomaste y por qué.
+- Usar Programacion Orientada a Objetos (POO) para un mejor reescalabilidad y reutilizacion del proyecto.
 
-- Aprendi javascript principalmente y un poco a html.
-- Aprendi a como conectar html y javascript
-- A como capturar los datos ingresados en html y pasar a javascript.
-- A usar clases en javascript para mejor modularidad.
-- A como utilizar export e import en javascript para utilizar funciones de otros archivos.
-- A separar responsabilidades de funciones y ser mas concreto con la funcionalidad.
+- Decidi tener una clase para que pueda manejar varias tipos de algoritmos (por el momento solo A*), asi en futuras implementaciones poder solo corregir ligeramente el codigo sin necesidad de reestructura por completo.
